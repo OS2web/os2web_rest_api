@@ -1,0 +1,11 @@
+{
+  "name": "os2web/os2web_rest_api",
+  "description": "OS2Web Rest API",
+  "type": "drupal-module",
+  "require": {
+    "drupal/core": "*",
+    "drupal/restui": "*"
+  },
+  "license": "EUPL-1.2",
+  "minimum-stability": "dev"
+}

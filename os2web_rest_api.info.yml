@@ -1,0 +1,7 @@
+name: 'OS2Web Rest API'
+type: module
+description: 'Provides REST API for OS2Web content'
+core: 8.x
+package: 'OS2Web'
+dependencies:
+  - restui
