@@ -1,0 +1,6 @@
+os2web_rest_api.os2web_reset_api_settings_form:
+  title: 'OS2Web Rest API'
+  route_name: os2web_rest_api.os2web_reset_api_settings_form
+  description: 'Settings form and description on OS2Web Rest API'
+  parent: system.admin_config_system
+  weight: 99

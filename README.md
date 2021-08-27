@@ -14,10 +14,22 @@ that is included in Drupal core.
 Module provides preconfigured REST sources and Views for fetching lists nodes
 and terms in JSON-format
 * /node/[node id]?_format=json - particular node
-* /rest/os2web/list/term - list of taxonomy terms
 * /rest/os2web/list/node/[taxonomy term id] - list of nodes filtered by 
 [taxonomy term id]
+* /rest/os2web/list/term - list of all taxonomy terms
+* /rest/os2web/list/term/[vocabulary machine name] - list of taxonomy terms by vocabulary machine name
 
+For advanced filtering you can use multiple arguments. For example:
+```
+/rest/os2web/list/node/1+2+3
+```
+for `AND` condition
+```
+/rest/os2web/list/node/1,2,3
+```
+for `OR` condition
+
+**NOTE**: It's not possible to use `AND` condition on filtering taxonomy terms.
 
 ## Install
 Module is available to download via composer.

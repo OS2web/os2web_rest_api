@@ -4,4 +4,9 @@ description: 'Provides REST API for OS2Web content'
 core: 8.x
 package: 'OS2Web'
 dependencies:
-  - restui
+  - rest
+  - node
+  - serialization
+  - taxonomy
+  - views
+  - user

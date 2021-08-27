@@ -17,6 +17,7 @@ function os2web_rest_api_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Provides REST API for OS2Web content') . '</p>';
+      $output .= '<p>' . t('See module information and settings on <a href="/admin/config/system/os2web-rest-api">configuration page</a>') . '</p>';
       return $output;
 
     default:
