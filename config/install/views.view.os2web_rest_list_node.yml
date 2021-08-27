@@ -306,12 +306,12 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: true
+          specify_validation: false
           validate:
-            type: numeric
-            fail: 'access denied'
+            type: none
+            fail: 'not found'
           validate_options: {  }
-          break_phrase: false
+          break_phrase: true
           add_table: false
           require_value: false
           reduce_duplicates: true
