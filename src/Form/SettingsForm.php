@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
+use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -85,7 +86,6 @@ class SettingsForm extends ConfigFormBase {
       '#suffix' => '</p>',
     ];
 
-
     $path_array = [
       'OS2WEB Rest list node' => '/admin/structure/views/view/os2web_rest_list_node',
       'OS2WEB Rest list term' => '/admin/structure/views/view/os2web_rest_list_term',
@@ -105,6 +105,41 @@ class SettingsForm extends ConfigFormBase {
       ]),
       '#suffix' => '</p>',
     ];
+    $example_path_array = [];
+    $nid = \Drupal::entityQuery('node')->range(0, 1)->execute();
+    if (!empty($nid)) {
+      $example_path_array['Node'] = str_replace(':nid', reset($nid), '/node/:nid?_format=json');
+    }
+
+    $tid = \Drupal::database()->select('taxonomy_index', 'tn')->fields('tn', ['tid'])->isNotNull('nid')->range(0, 1)->execute()->fetchCol('tid');
+    if (!empty($tid)) {
+      $tid = reset($tid);
+      $example_path_array['Nodes list'] = str_replace(':tid', $tid, '/rest/os2web/list/node/:tid');
+      $example_path_array['Taxonomy terms list'] = '/rest/os2web/list/term';
+      $term = Term::load($tid);
+      $vid = $term->bundle();
+      $example_path_array['Taxonomy terms list by vocabulary'] = str_replace(':vid', $vid, '/rest/os2web/list/term/:vid');
+    }
+    else {
+      $example_path_array['No examples on nodes and taxonomy terms lists. Create node with taxonomy term reference first'] = '/node/add';
+    }
+    $example_urls = [
+      '#theme' => 'item_list',
+      '#items' => [],
+    ];
+
+    foreach ($example_path_array as $label => $path) {
+      $url = Url::fromUri('internal:' . $path, ['absolute' => TRUE]);
+      $example_urls['#items'][$label] = Markup::create($label . ': ' . Link::fromTextAndUrl($url->toString(), $url)->toString());
+    }
+    $form['example_urls']= [
+      '#prefix' => '<p>',
+      '#markup' => $this->t('Examples on API-get requests:@list', [
+        '@list' => Markup::create(\Drupal::service('renderer')->renderPlain($example_urls)),
+      ]),
+      '#suffix' => '</p>',
+    ];
+
 
     $form['auth_header'] = [
       '#prefix' => '<h3>',
