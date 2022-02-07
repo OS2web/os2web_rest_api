@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\field\FieldStorageConfigInterface;
 
 /**
  * Implements hook_help().
@@ -21,5 +22,45 @@ function os2web_rest_api_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function os2web_rest_api_views_data_alter(&$data) {
+  $data['taxonomy_index']['tids_by_names'] = [
+    'group' => t('Content'),
+    'title' => t('OS2Web Rest API: Has taxonomy term ID, by name'),
+    'help' => t('Display content if it has the selected taxonomy terms.'),
+    'real field' => 'tid',
+    'filter' => [
+      'title' => t('OS2Web Rest API: Has taxonomy term ID, by name'),
+      'id' => 'os2web_rest_taxonomy_index_term_name',
+      'hierarchy table' => 'taxonomy_term__parent',
+      'numeric' => TRUE,
+      'skip base' => 'taxonomy_term_field_data',
+      'allow empty' => TRUE,
+    ],
+  ];
+}
+
+/**
+ * Implements hook_field_views_data_alter().
+ *
+ * Views integration for entity reference fields which reference taxonomy terms.
+ * Adds a term relationship to the default field data.
+ *
+ * @see views_field_default_views_data()
+ */
+function os2web_rest_api_field_views_data_alter(array &$data, FieldStorageConfigInterface $field_storage) {
+  if ($field_storage->getType() == 'entity_reference' && $field_storage->getSetting('target_type') == 'taxonomy_term') {
+    foreach ($data as $table_name => $table_data) {
+      foreach ($table_data as $field_name => $field_data) {
+        if (isset($field_data['filter']) && $field_name != 'delta') {
+          $data[$table_name][$field_name]['filter']['id'] = 'os2web_rest_taxonomy_index_term_name';
+        }
+      }
+    }
   }
 }
