@@ -13,8 +13,8 @@ use Drupal\views\ViewExecutable;
  *
  * @ViewsExposedForm(
  *   id = "os2web_basic",
- *   title = @Translation("OS2Web Basic"),
- *   help = @Translation("OS2Web Basic exposed form")
+ *   title = @Translation("OS2Web Basic. GET, POST"),
+ *   help = @Translation("OS2Web Basic exposed form. GET, POST")
  * )
  */
 class Os2webBasic extends Basic {

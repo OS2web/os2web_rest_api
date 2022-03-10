@@ -13,8 +13,8 @@ use Symfony\Component\Routing\RouteCollection;
  *
  * @ViewsDisplay(
  *   id = "os2web_rest_export",
- *   title = @Translation("OS2Web REST export"),
- *   help = @Translation("Create a OS2Web REST export resource."),
+ *   title = @Translation("OS2Web REST export, GET, POST"),
+ *   help = @Translation("Create a OS2Web REST export resource with ability GET, POST requests."),
  *   uses_route = TRUE,
  *   admin = @Translation("OS2Web REST export"),
  *   returns_response = TRUE
