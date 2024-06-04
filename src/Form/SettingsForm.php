@@ -106,12 +106,12 @@ class SettingsForm extends ConfigFormBase {
       '#suffix' => '</p>',
     ];
     $example_path_array = [];
-    $nid = \Drupal::entityQuery('node')->range(0, 1)->execute();
+    $nid = \Drupal::entityQuery('node')->accessCheck(false)->range(0, 1)->execute();
     if (!empty($nid)) {
       $example_path_array['Node'] = str_replace(':nid', reset($nid), '/node/:nid?_format=json');
     }
 
-    $tid = \Drupal::database()->select('taxonomy_index', 'tn')->fields('tn', ['tid'])->isNotNull('nid')->range(0, 1)->execute()->fetchCol('tid');
+    $tid = \Drupal::database()->select('taxonomy_index', 'tn')->fields('tn', ['tid'])->isNotNull('nid')->range(0, 1)->execute()->fetchCol();
     if (!empty($tid)) {
       $tid = reset($tid);
       $example_path_array['Nodes list'] = str_replace(':tid', $tid, '/rest/os2web/list/node/:tid');
